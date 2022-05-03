@@ -12,13 +12,14 @@
 </head>
 <body>
 <div class="container">
-  <h3>USER REGISTRATION:</h3>
+  <h3>{{$title}}</h3>
+  
   <div class="container">
-    <form action="http://127.0.0.1:8000/user" method="post" enctype="multipart/form-data">
+    <form action="{{$url}}" method="post" enctype="multipart/form-data">
         @csrf
         <div class="form-group">
             <label>First Name: </label>
-            <input type="text" class="form-control" name="fname" placeholder="first name" value="{{old('fname')}}"/>
+            <input type="text" class="form-control" name="fname" placeholder="first name" value="@if($tu == 'U') {{$user->name}} @else {{old('fname')}} @endif"/>
             <span class="text-danger">
                 @error('fname')
                     {{$message}}
@@ -26,7 +27,7 @@
             </span>
         </div> 
         
-        <div class="form-group">
+        <!-- <div class="form-group">
             <label>Last Name: </label>
             <input type="text" class="form-control" name="lname" placeholder="last name" value="{{old('lname')}}"/>
             <span class="text-danger">
@@ -34,11 +35,11 @@
                     {{$message}}
                 @enderror
             </span>
-        </div> 
+        </div>  -->
 
         <div class="form-group">
             <label>Email: </label>
-            <input type="text" class="form-control" name="email" placeholder="email" value="{{old('email')}}"/>
+            <input type="text" class="form-control" name="email" placeholder="email" value="@if($tu == 'U') {{$user->email}} @else {{old('email')}} @endif"/>
             <span class="text-danger">
                 @error('email')
                     {{$message}}
@@ -46,6 +47,7 @@
             </span>
         </div> 
 
+        @if($tu == 'R')
         <div class="form-group">
             <label>Password: </label>
             <input type="password" class="form-control" name="password" placeholder="password"/>
@@ -68,13 +70,17 @@
         
         </div>
 
+        @endif
+        
         <div class="form-group">
             <label>Upload Your Photo: </label>
             <input type="file" class="form-control-file" name="pic" />
         </div> 
 
         <div class="form-group">
-            <button type="submit" class="btn btn-primary" name="submit">Register </button>
+            <a href="{{route('user.submit')}}">
+                <button type="submit" class="btn btn-primary" name="submit">Register </button>
+            </a>
         </div> 
     </form>
   </div>
